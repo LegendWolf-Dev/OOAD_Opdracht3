@@ -48,16 +48,20 @@ public class RegistreerLuchthavenController implements Initializable {
         // Toon eerst een leeg veld, zodat de gebruiker een waarde moet selecteren, wat de event triggered.
         String leeg = "";
         landComboBox.getItems().add(leeg);
+
         // Creëer een gesorteerde Set namen en voeg ze toe aan de combo box.
         Set<String> landNamen = alleLanden.keySet();
-        for (Iterator<String> i = landNamen.iterator(); i.hasNext();) {
+        for (Iterator<String> i = landNamen.iterator(); i.hasNext(); ) {
             landComboBox.getItems().add(i.next());
         }
+
         // Voeg event listener toe aan naam- en codeTextField.
         naamTextField.focusedProperty().addListener((obs, oldText, newText) -> {
-            if(!newText) naam();}); // if (focus lost)
+            if (!newText) naam();
+        }); // if (focus lost)
         codeTextField.focusedProperty().addListener((obs, oldText, newText) -> {
-            if(!newText) code();});
+            if (!newText) code();
+        });
 
     }
 
@@ -120,6 +124,7 @@ public class RegistreerLuchthavenController implements Initializable {
     public void ok() {
         try {
             nieuweLuchthaven.bewaar();
+            toonSuccess("Luchthaven toegevoegd");
             Stage stage = (Stage) buttonOK.getScene().getWindow();
             stage.close();
         } catch (IllegalStateException ei) {
@@ -137,5 +142,12 @@ public class RegistreerLuchthavenController implements Initializable {
         alert.setTitle("Waarschuwing!");
         alert.setContentText(tekstMessage);
         alert.showAndWait();
+    }
+
+    private void toonSuccess(String tekstMessage) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Succes!");
+        alert.setContentText(tekstMessage);
+        alert.show();
     }
 }
