@@ -8,12 +8,12 @@ import main.domeinLaag.Vliegtuig;
 import main.domeinLaag.VliegtuigType;
 import main.domeinLaag.Vlucht;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Calendar;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class VluchtTest {
 
@@ -63,15 +63,15 @@ public class VluchtTest {
 			vlucht.zetVliegtuig(vt1);
 			vlucht.zetVertrekpunt(lh1);
 			Luchthaven bestemming = vlucht.getBestemming();
-			assertTrue(bestemming == null);
+			assertNull(bestemming);
 			vlucht.zetBestemming(lh1);
 			// De test zou niet verder mogen komen: er moet al een exception gethrowd zijn.
 			bestemming = vlucht.getBestemming();
-			assertFalse(bestemming.equals(lh1));
+			assertNotEquals(bestemming, lh1);
 		}
 		catch(IllegalArgumentException e) {
 			Luchthaven bestemming = vlucht.getBestemming();
-			assertFalse(bestemming.equals(lh1));
+			assertNotEquals(bestemming, lh1);
 		}
 	}
 
@@ -83,21 +83,41 @@ public class VluchtTest {
 			vlucht.zetVliegtuig(vt1);
 			vlucht.zetVertrekpunt(lh2);
 			bestemming = vlucht.getBestemming();
-			assertTrue(bestemming == null);
+			assertNull(bestemming);
 			vlucht.zetBestemming(lh1);
 			bestemming = vlucht.getBestemming();
-			assertTrue(bestemming.equals(lh1));
+			assertEquals(bestemming, lh1);
 		}
 		catch(IllegalArgumentException e) {
 			bestemming = vlucht.getBestemming();
-			assertTrue(bestemming.equals(lh1));
+			assertEquals(bestemming, lh1);
 		}
 	}
 
 	/**
-	 * Business rule:
+	 * Business rule: vertrektijd mag niet gelijk zijn aan de aankomsttijd
 	 * xxx
 	 */
-	
-		
+
+	@Test
+	public void testVertrekTijdMagNietGelijkZijnAanDeAankomstTijd_True(){
+		Calendar testVertrektijd1 = vl1.getVertrekTijd();
+		Calendar testAankomstTijd1 = vl1.getAankomstTijd();
+		assertNotEquals(testVertrektijd1, testAankomstTijd1);
+	}
+
+
+	/**
+	 * Business rule: vertrektijd mag niet groter zijn dan de aankomsttijd
+	 * xxx
+	 */
+
+	@Test
+	public void testVertrekTijdMagNietGroterZijnDanDeAankomstTijd_True(){
+		Calendar testVertrektijd = vl1.getVertrekTijd();
+		Calendar testAankomstTijd = vl1.getAankomstTijd();
+
+		int verschilInTijd = testVertrektijd.compareTo(testAankomstTijd);
+		assertFalse(verschilInTijd > 0, "vertrektijd mag niet groter zijn dan aankomst tijd");
+	}
 }
