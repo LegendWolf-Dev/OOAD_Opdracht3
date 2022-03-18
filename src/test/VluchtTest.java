@@ -158,11 +158,11 @@ public class VluchtTest {
 
     }
 	/**
-	 * Business rule: aankomsttijd mag niet kleiner zijn dan vertrektijd.
+	 * Business rule: aankomsttijd mag niet voor vertrektijd zijn.
 	 *
 	 */
 	@Test
-	public void testAankomstTijdMagVoorVertrektijd_False(){
+	public void testAankomstTijdMagVoorVertrektijd_ThrowsVluchtException(){
 
 		Vlucht testVlucht = new Vlucht();
 		Calendar testVertrekTijdNu = Calendar.getInstance();
@@ -188,7 +188,7 @@ public class VluchtTest {
 	}
 
 	@Test
-	public void testAankomstTijdMagNietVoorVertrektijd_True(){
+	public void testAankomstTijdMagNietVoorVertrektijd_ThrowsGeenVluchtException(){
 
 			Vlucht testVlucht2 = new Vlucht();
 			Calendar testVertrekTijdNu = Calendar.getInstance();
