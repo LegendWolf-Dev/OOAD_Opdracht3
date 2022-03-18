@@ -5,6 +5,8 @@ import main.domeinLaag.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -153,5 +155,55 @@ public class VluchtTest {
         } catch (VluchtException e) {
             assertEquals("Geen geldig tijdstip!", e.getMessage());
         }
+
     }
+	/**
+	 * Business rule: aankomsttijd mag niet kleiner zijn dan vertrektijd.
+	 *
+	 */
+	@Test
+	public void testAankomstTijdMagVoorVertrektijd_False(){
+
+		Vlucht testVlucht = new Vlucht();
+		Calendar testVertrekTijdNu = Calendar.getInstance();
+		Calendar testBestemmingTijdNu = Calendar.getInstance();
+
+		testVertrekTijdNu.add(Calendar.MINUTE,1);
+
+
+		testVlucht.zetVliegtuig(vt1);
+		testVlucht.zetVertrekpunt(lh2);
+		testVlucht.zetBestemming(lh1);
+		assertThrows(VluchtException.class,() ->{
+
+		testVlucht.zetVertrekTijd(testVertrekTijdNu);
+		testVlucht.zetAankomstTijd(testBestemmingTijdNu);});
+
+		try {
+			testVlucht.zetVertrekTijd(testVertrekTijdNu);
+			testVlucht.zetAankomstTijd(testBestemmingTijdNu);
+		}catch (VluchtException e) {
+			assertEquals("Aankomsttijd voor vertrektijd", e.getMessage());
+		}
+	}
+
+	@Test
+	public void testAankomstTijdMagNietVoorVertrektijd_True(){
+
+			Vlucht testVlucht2 = new Vlucht();
+			Calendar testVertrekTijdNu = Calendar.getInstance();
+			Calendar testBestemmingTijdNu = Calendar.getInstance();
+
+			testBestemmingTijdNu.add(Calendar.MINUTE, 1);
+
+			testVlucht2.zetVliegtuig(vt1);
+			testVlucht2.zetVertrekpunt(lh2);
+			testVlucht2.zetBestemming(lh1);
+		try {
+			testVlucht2.zetVertrekTijd(testVertrekTijdNu);
+			testVlucht2.zetAankomstTijd(testBestemmingTijdNu);
+		}catch (VluchtException e){
+			assertEquals("", e.getMessage());
+		}
+	}
 }
