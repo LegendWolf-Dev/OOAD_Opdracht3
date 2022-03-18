@@ -76,7 +76,7 @@
             </AnchorPane>
         </content>
       </TitledPane>
-      <Button fx:id="confirmRegisterenKlant" layoutX="435.0" layoutY="437.0" mnemonicParsing="false" text="Opslaan Boeking" />
+      <Button fx:id="confirmRegisterenKlant" layoutX="435.0" layoutY="437.0" mnemonicParsing="false" text="Boeking Opslaan" />
       <Button fx:id="cancelRegisterenKlant" layoutX="14.0" layoutY="437.0" mnemonicParsing="false" text="Cancel" />
    </children>
 </AnchorPane>

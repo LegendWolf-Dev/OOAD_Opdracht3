@@ -92,3 +92,4 @@ public class BoekVluchtController implements Initializable {
         IntStream.rangeClosed(0, 59).boxed().forEach(this.vertrekTijdMinuutBox.getItems()::add);
     }
 }
+
