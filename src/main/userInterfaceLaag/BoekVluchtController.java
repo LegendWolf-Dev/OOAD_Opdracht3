@@ -1,15 +1,33 @@
 package main.userInterfaceLaag;
 
+import com.sun.tools.javac.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import main.domeinLaag.Luchthaven;
 
-public class BoekVluchtController {
+import java.net.URL;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.stream.IntStream;
+
+public class BoekVluchtController implements Initializable {
     @FXML
-    private ChoiceBox vertrekPuntBox;
+    private ComboBox vertrekPuntBox;
     @FXML
-    private ChoiceBox bestemmingBox;
+    private ComboBox bestemmingBox;
     @FXML
-    private ComboBox vertrekTijdBox;
+    private ComboBox vertrekTijdDatumBox;
+    @FXML
+    private ComboBox vertrekTijdUurBox;
+    @FXML
+    private ComboBox vertrekTijdMinuutBox;
     @FXML
     private Button confirmBoekingButton;
     @FXML
@@ -33,7 +51,43 @@ public class BoekVluchtController {
     @FXML
     private Button cancelRegisterenKlant;
 
+    private ArrayList<String> luchthavensNamen;
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        getDataLists();
 
+        fillVertrekPuntBox();
+        fillBestemmingBox();
+        fillVertrekTijdUurBox();
+        fillVertrekTijdMinuutBox();
+    }
 
+    private void getDataLists() {
+        luchthavensNamen = new ArrayList<>();
+
+        TreeMap<String, Luchthaven> luchthavens = Luchthaven.geefAlle();
+        Set<String> lSet = luchthavens.keySet();
+        for (String lNaam : lSet) {
+            Luchthaven luchthaven = (Luchthaven) luchthavens.get(lNaam);
+
+            this.luchthavensNamen.add(luchthaven.geefNaam());
+        }
+    }
+
+    private void fillVertrekPuntBox() {
+        this.vertrekPuntBox.setItems((ObservableList) this.luchthavensNamen);
+    }
+
+    private void fillBestemmingBox() {
+        this.bestemmingBox.setItems((ObservableList) this.luchthavensNamen);
+    }
+
+    private void fillVertrekTijdUurBox() {
+        IntStream.rangeClosed(0, 23).boxed().forEach(this.vertrekTijdUurBox.getItems()::add);
+    }
+
+    private void fillVertrekTijdMinuutBox() {
+        IntStream.rangeClosed(0, 59).boxed().forEach(this.vertrekTijdMinuutBox.getItems()::add);
+    }
 }

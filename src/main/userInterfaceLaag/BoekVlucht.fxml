@@ -18,14 +18,14 @@
                <children>
                   <AnchorPane prefHeight="69.0" prefWidth="306.0">
                      <children>
-                        <ChoiceBox fx:id="vertrekPuntBox" layoutX="119.0" layoutY="25.0" prefWidth="150.0" />
                         <Label layoutX="38.0" layoutY="29.0" text="Vertrekpunt" />
+                        <ComboBox fx:id="vertrekPuntBox" layoutX="120.0" layoutY="25.0" prefWidth="150.0" />
                      </children>
                   </AnchorPane>
                   <AnchorPane layoutX="263.0" prefHeight="69.0" prefWidth="306.0">
                      <children>
-                        <ChoiceBox fx:id="bestemmingBox" layoutX="119.0" layoutY="25.0" prefWidth="150.0" />
                         <Label layoutX="38.0" layoutY="29.0" text="Bestemming" />
+                        <ComboBox fx:id="bestemmingBox" layoutX="119.0" layoutY="25.0" prefWidth="150.0" />
                      </children>
                   </AnchorPane>
                   <AnchorPane layoutY="69.0" prefHeight="35.0" prefWidth="534.0">
