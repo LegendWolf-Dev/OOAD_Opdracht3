@@ -76,11 +76,13 @@ public class BoekVluchtController implements Initializable {
     }
 
     private void fillVertrekPuntBox() {
-        this.vertrekPuntBox.setItems((ObservableList) this.luchthavensNamen);
+        ObservableList<String> list = FXCollections.observableArrayList(this.luchthavensNamen);
+        this.vertrekPuntBox.setItems(list);
     }
 
     private void fillBestemmingBox() {
-        this.bestemmingBox.setItems((ObservableList) this.luchthavensNamen);
+        ObservableList<String> list = FXCollections.observableArrayList(this.luchthavensNamen);
+        this.bestemmingBox.setItems(list);
     }
 
     private void fillVertrekTijdUurBox() {
