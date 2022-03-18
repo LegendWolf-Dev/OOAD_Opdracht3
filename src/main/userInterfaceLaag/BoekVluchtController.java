@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 import main.domeinLaag.Luchthaven;
 
 import java.net.URL;
@@ -28,10 +29,6 @@ public class BoekVluchtController implements Initializable {
     @FXML
     private ComboBox vertrekTijdMinuutBox;
     @FXML
-    private Button confirmBoekingButton;
-    @FXML
-    private Button cancelBoekingButton;
-    @FXML
     private Label boekingInformatie;
     @FXML
     private TextField voornaamTextField;
@@ -46,9 +43,9 @@ public class BoekVluchtController implements Initializable {
     @FXML
     private ChoiceBox klasseBox;
     @FXML
-    private Button confirmRegisterenKlant;
+    private Button okButton;
     @FXML
-    private Button cancelRegisterenKlant;
+    private Button cancelButton;
 
     private ArrayList<String> luchthavensNamen;
 
@@ -90,6 +87,15 @@ public class BoekVluchtController implements Initializable {
 
     private void fillVertrekTijdMinuutBox() {
         IntStream.rangeClosed(0, 59).boxed().forEach(this.vertrekTijdMinuutBox.getItems()::add);
+    }
+    public void cancel() {
+        Stage stage = (Stage) cancelButton.getScene().getWindow();
+        stage.close();
+    }
+
+    public void ok() {
+        Stage stage = (Stage) okButton.getScene().getWindow();
+        stage.close();
     }
 }
 
