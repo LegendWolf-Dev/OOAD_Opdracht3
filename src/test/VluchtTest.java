@@ -249,15 +249,20 @@ public class VluchtTest {
      * Foutmelding na ok "vertrektijd ongeldig"
      */
     @Test
-    public void testFoutmelding_VertrekTijdOngeldig(){
+    public void testFoutmelding_VertrekTijdOngeldig() {
         Calendar aankomstTijd = Calendar.getInstance();
-        aankomstTijd.set(Calendar.MINUTE,1);
+        aankomstTijd.add(Calendar.MINUTE,1);
 
-        Vlucht testVlucht1 = new Vlucht(vt1,lh1,lh2,null,aankomstTijd);
+        Vlucht testVlucht1 = new Vlucht();
+        testVlucht1.zetVliegtuig(vt1);
+        testVlucht1.zetVertrekpunt(lh2);
+        testVlucht1.zetBestemming(lh1);
+
         try{
+            testVlucht1.zetAankomstTijd(aankomstTijd);
             testVlucht1.bewaar();
         } catch (Exception e) {
-            assertEquals("Vertrektijd ongeldig", e.getMessage());
+            assertEquals("Aankomsttijd voor vertrektijd", e.getMessage());
         }
     }
     /**
@@ -268,13 +273,18 @@ public class VluchtTest {
     @Test
     public void testFoutmelding_aankomstTijdOngeldig(){
         Calendar vertrekTijd = Calendar.getInstance();
-        vertrekTijd.set(Calendar.MINUTE,1);
+        vertrekTijd.add(Calendar.MINUTE,1);
 
-        Vlucht testVlucht1 = new Vlucht(vt1,lh1,lh2,vertrekTijd,null);
+        Vlucht testVlucht1 = new Vlucht();
+        testVlucht1.zetVliegtuig(vt1);
+        testVlucht1.zetVertrekpunt(lh2);
+        testVlucht1.zetBestemming(lh1);
+
         try{
+            testVlucht1.zetVertrekTijd(vertrekTijd);
             testVlucht1.bewaar();
         } catch (Exception e) {
-            assertNotEquals("aankomstTijd ongeldig", e.getMessage());
+            assertEquals("Geen geldige aankomsttijd.", e.getMessage());
         }
     }
 }
