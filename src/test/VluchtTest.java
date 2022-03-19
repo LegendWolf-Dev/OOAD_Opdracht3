@@ -241,4 +241,45 @@ public class VluchtTest {
             assertEquals("Geen geldige bestemming.", e.getMessage());
         }
     }
+
+
+
+
+    /**
+     * Test
+     * Foutmelding na ok "vertrektijd ongeldig"
+     */
+    @Test
+    public void testFoutmelding_VertrekTijdOngeldig(){
+        Calendar vertrekTijd = Calendar.getInstance();
+        vertrekTijd.set(3000,0,0,0,0,0);
+        Calendar aankomstTijd = Calendar.getInstance();
+        aankomstTijd.set(2021,01,20,10,15,0);
+
+        Vlucht testVlucht1 = new Vlucht(vt1,lh1,lh2,vertrekTijd,aankomstTijd);
+        try{
+            testVlucht1.bewaar();
+        } catch (Exception e) {
+            assertEquals("Vertrektijd ongeldig", e.getMessage());
+        }
+    }
+    /**
+     * Test
+     * Foutmelding na ok "aankomsttijd ongeldig"
+     */
+
+    @Test
+    public void testFoutmelding_aankomstTijdOngeldig(){
+        Calendar vertrekTijd = Calendar.getInstance();
+        vertrekTijd.set(2021,01,20,10,15,0);
+        Calendar aankomstTijd = Calendar.getInstance();
+        aankomstTijd.set(-1999,00,00,00,00,0);
+
+        Vlucht testVlucht1 = new Vlucht(vt1,lh1,lh2,vertrekTijd,aankomstTijd);
+        try{
+            testVlucht1.bewaar();
+        } catch (Exception e) {
+            assertEquals("aankomstTijd ongeldig", e.getMessage());
+        }
+    }
 }
