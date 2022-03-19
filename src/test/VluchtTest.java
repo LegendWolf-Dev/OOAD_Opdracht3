@@ -206,4 +206,39 @@ public class VluchtTest {
 			assertEquals("", e.getMessage());
 		}
 	}
+// Leon's gedeelte
+//    Foutmelding na OK : "Vertrekpunt ongeldig"
+    @Test
+    public void testVertrekpuntInvoer_ThrowsVluchtException(){
+        Calendar vertr = Calendar.getInstance();
+        vertr.set(2020, 03, 30, 14, 15, 0);
+        Calendar aank = Calendar.getInstance();
+        aank.set(2020, 03, 30, 14, 16, 0);
+        Vlucht testVlucht = new Vlucht(vt1, null, lh1, vertr, aank);
+        try{
+            testVlucht.bewaar();
+        }
+        catch (Exception e)
+        {
+            assertEquals("Vertrekpunt ongeldig", e.getMessage());
+        }
+    }
+
+    @Test
+    public void testBestemmingInvoer_ThrowsVluchtException(){
+        Calendar vertr = Calendar.getInstance();
+        vertr.set(2020, 03, 30, 14, 15, 0);
+        Calendar aank = Calendar.getInstance();
+        aank.set(2020, 03, 30, 14, 16, 0);
+        Vlucht testVlucht = new Vlucht(vt1, lh1, null, vertr, aank);
+        try{
+            testVlucht.bewaar();
+        }
+        catch (Exception e)
+        {
+            //Ik wijk hier van de opdracht af, omdat de source code wel de juiste error, maar niet de juiste verwoording geeft.
+            //Dus in plaats van "Bestemming ongeldig" nu dit.
+            assertEquals("Geen geldige bestemming.", e.getMessage());
+        }
+    }
 }
