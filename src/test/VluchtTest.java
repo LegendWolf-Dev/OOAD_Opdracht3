@@ -287,4 +287,52 @@ public class VluchtTest {
             assertEquals("Geen geldige aankomsttijd.", e.getMessage());
         }
     }
+    /**
+     * Test
+     * Foutmelding "vliegtuig ongeldig"
+     */
+
+    @Test
+    public void testFoutmelding_VliegtuigOngeldig(){
+        Vlucht testVlucht = new Vlucht();
+        Calendar vertr = Calendar.getInstance();
+        vertr.set(2022, 07, 1, 21, 12, 0);
+        Calendar aank = Calendar.getInstance();
+        aank.set(2022, 07, 1, 21, 13, 0);
+
+        testVlucht.zetVliegtuig(null);
+        testVlucht.zetVertrekpunt(lh2);
+        testVlucht.zetBestemming(lh1);
+
+        try{
+            testVlucht.zetVertrekTijd(vertr);
+            testVlucht.zetAankomstTijd(aank);
+            testVlucht.bewaar();
+        } catch (Exception e) {
+            assertEquals("Geen geldige vliegtuig.", e.getMessage());
+        }
+    }
+
+    /**
+     * Test
+     * Foutmelding "tijd in het verleden"
+     */
+
+    @Test
+    public void testFoutmelding_TijdInHetVerleden(){
+        Vlucht testVlucht = new Vlucht();
+        Calendar vertr = Calendar.getInstance();
+        vertr.set(2022, 07, 1, 21, -1, 0);
+
+        testVlucht.zetVliegtuig(vt1);
+        testVlucht.zetVertrekpunt(lh2);
+        testVlucht.zetBestemming(lh1);
+
+        try{
+            testVlucht.zetVertrekTijd(vertr);
+            testVlucht.bewaar();
+        } catch (Exception e) {
+            assertEquals("Geen geldig tijdstip!", e.getMessage());
+        }
+    }
 }
