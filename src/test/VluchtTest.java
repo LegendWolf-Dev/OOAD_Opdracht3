@@ -296,14 +296,12 @@ public class VluchtTest {
     public void testFoutmelding_VliegtuigOngeldig(){
         Vlucht testVlucht = new Vlucht();
         Calendar vertr = Calendar.getInstance();
-        vertr.set(2022, 07, 1, 21, 12, 0);
+        vertr.set(Calendar.MINUTE,0);
         Calendar aank = Calendar.getInstance();
-        aank.set(2022, 07, 1, 21, 13, 0);
+        aank.set(Calendar.MINUTE,1);
 
-        testVlucht.zetVliegtuig(null);
         testVlucht.zetVertrekpunt(lh2);
         testVlucht.zetBestemming(lh1);
-
         try{
             testVlucht.zetVertrekTijd(vertr);
             testVlucht.zetAankomstTijd(aank);
@@ -321,18 +319,16 @@ public class VluchtTest {
     @Test
     public void testFoutmelding_TijdInHetVerleden(){
         Vlucht testVlucht = new Vlucht();
-        Calendar vertr = Calendar.getInstance();
-        vertr.set(2022, 07, 1, 21, -1, 0);
-
+        Calendar vertrek = Calendar.getInstance();
+        vertrek.add(Calendar.MINUTE,-1);
         testVlucht.zetVliegtuig(vt1);
         testVlucht.zetVertrekpunt(lh2);
         testVlucht.zetBestemming(lh1);
-
         try{
-            testVlucht.zetVertrekTijd(vertr);
+            testVlucht.zetVertrekTijd(vertrek);
             testVlucht.bewaar();
         } catch (Exception e) {
-            assertEquals("Geen geldig tijdstip!", e.getMessage());
+            assertEquals("Geen geldige aankomsttijd.", e.getMessage());
         }
     }
 }
